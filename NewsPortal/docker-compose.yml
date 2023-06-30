@@ -1,0 +1,23 @@
+version: '3'
+services:
+  localhost:
+    container_name: pg
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: news_portal
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: astra2016
+  app:
+    container_name: NewsPortalApplication
+    build: .
+    ports:
+      - "9000:8080"
+    depends_on:
+      - localhost
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://pg:5432/news_portal
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: astra2016
